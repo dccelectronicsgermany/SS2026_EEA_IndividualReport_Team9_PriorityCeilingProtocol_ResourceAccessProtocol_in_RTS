@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+  <declaration>// Priority Ceiling Protocol (PCP) - Resource Access Protocols
+// Author: Daniel Chidi Chimezie, Matriculation Number: 1230515
+// Submission-ready UPPAAL model
+
+const int NTASKS = 3;
+const int NRES = 2;
+const int FREE = -1;
+
+// Higher number means higher priority.
+const int LOW = 1;
+const int MEDIUM = 2;
+const int HIGH = 3;
+
+// Resource identifiers.
+const int R1 = 0;
+const int R2 = 1;
+
+// Resource ceilings:
+// R1 is shared by T1 and T3, therefore ceiling(R1) = HIGH.
+// R2 is used by T2, therefore ceiling(R2) = MEDIUM.
+const int resCeil[NRES] = {HIGH, MEDIUM};
+
+bool locked[NRES] = {false, false};
+int owner[NRES] = {FREE, FREE};
+
+int systemCeilingExcluding(int tid)
+{
+    int c = 0;
+    int r;
+    for (r = 0; r &lt; NRES; r++) {
+        if (locked[r] &amp;&amp; owner[r] != tid &amp;&amp; resCeil[r] &gt; c) {
+            c = resCeil[r];
+        }
+    }
+    return c;
+}
+
+bool canEnter(int tid, int prio, int rid)
+{
+    return !locked[rid] &amp;&amp; prio &gt; systemCeilingExcluding(tid);
+}
+
+void lockResource(int tid, int rid)
+{
+    locked[rid] = true;
+    owner[rid] = tid;
+}
+
+void unlockResource(int tid, int rid)
+{
+    if (owner[rid] == tid) {
+        locked[rid] = false;
+        owner[rid] = FREE;
+    }
+}
+</declaration>
+
+  <template>
+    <name>Task</name>
+    <parameter>const int tid, const int prio, const int rid</parameter>
+    <location id="id0" x="-450" y="-40">
+      <name x="-465" y="-70">Idle</name>
+    </location>
+    <location id="id1" x="-250" y="-40">
+      <name x="-275" y="-70">Request</name>
+    </location>
+    <location id="id2" x="0" y="-40">
+      <name x="-25" y="-70">Critical</name>
+    </location>
+    <location id="id3" x="220" y="-40">
+      <name x="200" y="-70">Release</name>
+    </location>
+    <init ref="id0"/>
+
+    <transition>
+      <source ref="id0"/>
+      <target ref="id1"/>
+      <label kind="comments" x="-385" y="-85">task requests its resource</label>
+    </transition>
+
+    <transition>
+      <source ref="id1"/>
+      <target ref="id2"/>
+      <label kind="guard" x="-190" y="-90">canEnter(tid, prio, rid)</label>
+      <label kind="assignment" x="-175" y="-60">lockResource(tid, rid)</label>
+      <label kind="comments" x="-190" y="-120">PCP admission test</label>
+    </transition>
+
+    <transition>
+      <source ref="id1"/>
+      <target ref="id0"/>
+      <label kind="guard" x="-380" y="45">!canEnter(tid, prio, rid)</label>
+      <label kind="comments" x="-380" y="70">ceiling blocking / resource blocking</label>
+      <nail x="-350" y="90"/>
+    </transition>
+
+    <transition>
+      <source ref="id2"/>
+      <target ref="id3"/>
+      <label kind="comments" x="70" y="-85">critical section completed</label>
+    </transition>
+
+    <transition>
+      <source ref="id3"/>
+      <target ref="id0"/>
+      <label kind="assignment" x="-170" y="135">unlockResource(tid, rid)</label>
+      <label kind="comments" x="-170" y="160">release resource and return to idle</label>
+      <nail x="220" y="150"/>
+      <nail x="-450" y="150"/>
+    </transition>
+  </template>
+
+  <system>// Process instances
+// T1: highest-priority task uses R1.
+// T2: medium-priority task uses R2.
+// T3: lowest-priority task uses R1.
+T1 = Task(1, HIGH, R1);
+T2 = Task(2, MEDIUM, R2);
+T3 = Task(3, LOW, R1);
+
+system T1, T2, T3;
+</system>
+
+  <queries>
+    <query>
+      <formula>A[] not deadlock</formula>
+      <comment>Deadlock freedom. PCP prevents circular waiting/deadlock by the ceiling admission rule.</comment>
+    </query>
+    <query>
+      <formula>A[] not (T1.Critical and T2.Critical and owner[R1] == owner[R2])</formula>
+      <comment>No single task incorrectly owns both resources in this model.</comment>
+    </query>
+    <query>
+      <formula>A[] not (T1.Critical and T3.Critical)</formula>
+      <comment>Mutual exclusion on R1, shared by T1 and T3.</comment>
+    </query>
+    <query>
+      <formula>A[] T1.Critical imply owner[R1] == 1</formula>
+      <comment>If T1 is in its critical section, T1 owns R1.</comment>
+    </query>
+    <query>
+      <formula>A[] T2.Critical imply owner[R2] == 2</formula>
+      <comment>If T2 is in its critical section, T2 owns R2.</comment>
+    </query>
+    <query>
+      <formula>A[] T3.Critical imply owner[R1] == 3</formula>
+      <comment>If T3 is in its critical section, T3 owns R1.</comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; T1.Critical</formula>
+      <comment>Reachability: T1 can enter its critical section.</comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; T2.Critical</formula>
+      <comment>Reachability: T2 can enter its critical section.</comment>
+    </query>
+    <query>
+      <formula>E&lt;&gt; T3.Critical</formula>
+      <comment>Reachability: T3 can enter its critical section.</comment>
+    </query>
+    <query>
+      <formula>A[] locked[R1] imply owner[R1] != FREE</formula>
+      <comment>Resource consistency for R1.</comment>
+    </query>
+    <query>
+      <formula>A[] locked[R2] imply owner[R2] != FREE</formula>
+      <comment>Resource consistency for R2.</comment>
+    </query>
+  </queries>
+</nta>

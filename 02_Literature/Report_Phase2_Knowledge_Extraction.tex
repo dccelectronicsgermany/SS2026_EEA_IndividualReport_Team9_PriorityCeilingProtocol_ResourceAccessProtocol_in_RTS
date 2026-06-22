@@ -1,0 +1,88 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\usepackage{amsmath}
+\usepackage{cite}
+\title{Phase 2 Knowledge Extraction: Resource Access Protocols}
+\author{Daniel Chidi Chimezie}
+\begin{document}
+\maketitle
+\section{Source Scope}
+Chapter 7 is used as the source text for the extracted knowledge on resource access protocols \cite{Buttazzo2011}.
+\section{Extracted Knowledge}
+\subsection{7.1 INTRODUCTION}
+\textbf{Resource definition.} A resource is any software structure that can be used by a process to advance its execution. \cite{Buttazzo2011}\
+\textbf{Private/shared/exclusive resource.} A resource dedicated to a particular process is said to be private, whereas a resource that can be used by more tasks is called a shared resource. A shared resource protected against concurrent accesses is called an exclusive resource. \cite{Buttazzo2011}\
+\textbf{Critical section.} A piece of code executed under mutual exclusion constraints is called a critical section. \cite{Buttazzo2011}\
+\textbf{Blocked task.} A task waiting for an exclusive resource is said to be blocked on that resource, otherwise it proceeds by entering the critical section and holds the resource. \cite{Buttazzo2011}\
+\textbf{Semaphore.} Operating systems typically provide a general synchronization tool, called a semaphore [Dij68, BH73, PS85], that can be used by tasks to build critical sections. \cite{Buttazzo2011}\
+\subsection{7.2 THE PRIORITY INVERSION PHENOMENON}
+\textbf{Priority inversion.} A priority inversion is said to occur in the interval [t3, t6], since the highest-priority task τ1 waits for the execution of lower-priority tasks (τ2 and τ3). \cite{Buttazzo2011}\
+\textbf{Unbounded duration.} In general, the duration of priority inversion is unbounded, since any intermediate-priority task that can preempt τ3 will indirectly block τ1. \cite{Buttazzo2011}\
+\subsection{7.3 TERMINOLOGY AND ASSUMPTIONS}
+\textbf{Task model.} Throughout this chapter, we consider a set of n periodic tasks, τ1, τ2,...,τn, which cooperate through m shared resources, R1, R2,...,Rm. \cite{Buttazzo2011}\
+\textbf{Nominal and active priority.} Since a protocol modifies the task priority, each task is characterized by a fixed nominal priority Pi (assigned, for example, by the Rate Monotonic algorithm) and an active priority pi (pi ≥ Pi), which is dynamic and initially set to Pi. \cite{Buttazzo2011}\
+\textbf{Bi.} Bi denotes the maximum blocking time task τi can experience. \cite{Buttazzo2011}\
+\textbf{zi,k.} zi,k denotes a generic critical section of task τi guarded by semaphore Sk. \cite{Buttazzo2011}\
+\textbf{Zi,k.} Zi,k denotes the longest critical section of task τi guarded by semaphore Sk. \cite{Buttazzo2011}\
+\textbf{delta i,k.} δi,k denotes the duration of Zi,k. \cite{Buttazzo2011}\
+\textbf{Nested critical sections.} The critical sections used by any task are properly nested; that is, given any pair zi,h and zi,k, then either zi,h ⊂ zi,k, zi,k ⊂ zi,h, or zi,h ∩ zi,k = ∅. \cite{Buttazzo2011}\
+\subsection{7.4 NON-PREEMPTIVE PROTOCOL}
+\textbf{NPP idea.} A simple solution that avoids the unbounded priority inversion problem is to disallow preemption during the execution of any critical section. \cite{Buttazzo2011}\
+\textbf{NPP implementation.} This method, also referred to as Non-Preemptive Protocol (NPP), can be implemented by raising the priority of a task to the highest priority level whenever it enters a shared resource. \cite{Buttazzo2011}\
+\subsection{7.5 HIGHEST LOCKER PRIORITY PROTOCOL}
+\textbf{HLP idea.} The Highest Locker Priority (HLP) protocol improves NPP by raising the priority of a task that enters a resource Rk to the highest priority among the tasks sharing that resource. \cite{Buttazzo2011}\
+\textbf{Immediate Priority Ceiling.} For this reason, this protocol is also referred to as Immediate Priority Ceiling. \cite{Buttazzo2011}\
+\subsection{7.6 PRIORITY INHERITANCE PROTOCOL}
+\textbf{PIP idea.} The Priority Inheritance Protocol (PIP), proposed by Sha, Rajkumar and Lehoczky [SRL90], avoids unbounded priority inversion by modifying the priority of those tasks that cause blocking. \cite{Buttazzo2011}\
+\textbf{Priority inheritance.} In particular, when a task τi blocks one or more higher-priority tasks, it temporarily assumes (inherits) the highest priority of the blocked tasks. \cite{Buttazzo2011}\
+\subsection{7.7 PRIORITY CEILING PROTOCOL}
+\textbf{PCP purpose.} The Priority Ceiling Protocol (PCP) was introduced by Sha, Rajkumar, and Lehoczky [SRL90] to bound the priority inversion phenomenon and prevent the formation of deadlocks and chained blocking. \cite{Buttazzo2011}\
+\textbf{PCP basic idea.} The basic idea of this method is to extend the Priority Inheritance Protocol with a rule for granting a lock request on a free semaphore. \cite{Buttazzo2011}\
+\textbf{PCP rule.} To avoid multiple blocking, this rule does not allow a task to enter a critical section if there are locked semaphores that could block it. \cite{Buttazzo2011}\
+\subsection{Chapter 7}
+\textbf{SRP.} Stack Resource Policy (SRP); Although the ﬁrst four protocols have been developed under ﬁxed priority assign- ments, some of them have been extended under EDF. \cite{Buttazzo2011}\
+\textbf{SRP.} 2 The Stack Resource Policy, instead, was natively designed to be applicable under both ﬁxed and dynamic priority assignments. \cite{Buttazzo2011}\
+\textbf{Preemption level.} Resource Access Protocols 235 PREEMPTION LEVEL Besides a priority pi, a task τi is also characterized by a preemption level πi. \cite{Buttazzo2011}\
+\textbf{Preemption level.} The preemption level is a static parameter, assigned to a task at its creation time and as- sociated with all instances of that task. \cite{Buttazzo2011}\
+\textbf{System ceiling.} 238 Chapter 7 SYSTEM CEILING The resource access protocol adopted in the SRP also requires a system ceiling, Πs, deﬁned as the maximum of the current ceilings of all the resources; that is, Πs =m a x k \{CRk \}. \cite{Buttazzo2011}\
+\textbf{System ceiling.} Using the deﬁnitions introduced in the previous paragraph, this is achieved by the following preemption test: SRP Preemption Test: A task is not permitted to preempt until its priority is the highest among those of all the tasks ready to run, and its preemption level is higher than the system ceiling. \cite{Buttazzo2011}\
+\textbf{Sharing runtime stack.} (7.18) 7.8.5 SHARING RUNTIME STACK Another interesting implication deriving from the use of the SRP is that it supports stack sharing among tasks. \cite{Buttazzo2011}\
+\textbf{Schedulability analysis.} We then show how such blocking times can be used in the schedulability analysis to extend the guarantee tests derived for periodic task sets. \cite{Buttazzo2011}\
+\textbf{Schedulability analysis.} 246 Chapter 7 7.9 SCHEDULABILITY ANALYSIS This section explains how to verify the feasibility of a periodic task set in the presence of shared resources. \cite{Buttazzo2011}\
+\textbf{Summary.} In this chapter, we describe the main problems that may arise in a uniprocessor system when concurrent tasks use shared resources in exclusive mode, and we present some resource access protocols designed to avoid such problems and bound the maximum blocking time of each task. \cite{Buttazzo2011}\
+\textbf{Summary.} 7.10 SUMMARY The concurrency control protocols presented in this chapter can be compared with respect to several characteristics. \cite{Buttazzo2011}\
+\section{Extracted Equations}
+\textbf{7.1 Critical section structure.} wait(Sk) ... signal(Sk) --- each critical section operating on a resource Rk must begin with a wait(Sk) primitive and end with a signal(Sk) primitive. \cite{Buttazzo2011}\
+\textbf{7.1 Blocking time.} Bi --- Bi denotes the maximum blocking time task τi can experience. \cite{Buttazzo2011}\
+\textbf{7.1 Generic critical section.} zi,k --- zi,k denotes a generic critical section of task τi guarded by semaphore Sk. \cite{Buttazzo2011}\
+\textbf{7.1 Longest critical section.} Zi,k --- Zi,k denotes the longest critical section of task τi guarded by semaphore Sk. \cite{Buttazzo2011}\
+\textbf{7.1 Duration.} δi,k --- δi,k denotes the duration of Zi,k. \cite{Buttazzo2011}\
+\textbf{7.1 Blocking critical sections.} γi,j = \{Zj,k | (Pj < Pi) and (Sk ∈ σi,j)\} --- γi,j denotes the set of the longest critical sections that can block τi, accessed by the lower priority task τj. \cite{Buttazzo2011}\
+\textbf{7.2 NPP priority.} pi(Rk) = max\_h \{Ph\} --- as soon as a task τi enters a resource Rk, its dynamic priority is raised to the level. \cite{Buttazzo2011}\
+\textbf{7.3 NPP blocking.} Bi = max\_\{j,k\} \{δj,k - 1 | Zj,k ∈ γi\} --- the maximum blocking time τi can suffer is given by the duration of the longest critical section among those belonging to lower priority tasks. \cite{Buttazzo2011}\
+\textbf{7.4 HLP priority.} pi(Rk) = max\_h \{Ph | τh uses Rk\} --- as soon as a task τi enters a resource Rk, its dynamic priority is raised to the level. \cite{Buttazzo2011}\
+\textbf{7.5 Resource ceiling.} C(Rk) = max\_h \{Ph | τh uses Rk\} --- assigning each resource Rk a priority ceiling C(Rk) (computed off-line) equal to the maximum priority of the tasks sharing Rk. \cite{Buttazzo2011}\
+\textbf{7.6 HLP blocking.} Bi = max\_\{j,k\} \{δj,k - 1 | Zj,k ∈ γi\} --- Since a task τi can be blocked at most once, the maximum blocking time τi can suffer is given by the duration of the longest critical section among those that can block τi. \cite{Buttazzo2011}\
+\textbf{7.7 PIP priority inheritance.} pj(Rk) = max\{Pj, max\_h \{Ph | τh is blocked on Rk\}\} --- In general, a task inherits the highest priority of the tasks it blocks. \cite{Buttazzo2011}\
+\textbf{7.8 PIP bound.} αi = min(li, si) --- a task τi can be blocked for at most the duration of αi = min(li, si) critical sections. \cite{Buttazzo2011}\
+\textbf{7.9 PIP lower task sum.} Bi\textasciicircum{}l = sum\_\{j:Pj<Pi\} max\_k \{δj,k - 1 | Zj,k ∈ γi\} --- for each lower priority task τj that can block τi, sum the duration of the longest critical section among those that can block τi. \cite{Buttazzo2011}\
+\textbf{7.10 PIP semaphore sum.} Bi\textasciicircum{}s = sum\_\{k=1\}\textasciicircum{}\{m\} max\_j \{δj,k - 1 | Zj,k ∈ γi\} --- for each semaphore Sk that can block τi, sum the duration of the longest critical section among those that can block τi. \cite{Buttazzo2011}\
+\textbf{7.11 PIP upper bound.} Bi = min(Bi\textasciicircum{}l, Bi\textasciicircum{}s) --- compute Bi as the minimum between Bi\textasciicircum{}l and Bi\textasciicircum{}s. \cite{Buttazzo2011}\
+\textbf{7.12 Semaphore ceiling.} C(Sk) = max\_i \{Pi | Sk ∈ σi\} --- for each semaphore Sk we define a ceiling C(Sk) equal to the highest-priority of the tasks that use Sk. \cite{Buttazzo2011}\
+\textbf{7.13 PCP ceiling.} C(Sk) = max\_i \{Pi | Sk ∈ σi\} --- Each semaphore Sk is assigned a priority ceiling C(Sk) equal to the highest priority of the tasks that can lock it. \cite{Buttazzo2011}\
+\textbf{7.14 PCP inheritance.} pj(Rk) = max\{Pj, max\_h \{Ph | τh is blocked on Rk\}\} --- In general, a task inherits the highest priority of the tasks blocked by it. \cite{Buttazzo2011}\
+\textbf{7.15 PCP blocking set.} γi = \{Zj,k | (Pj < Pi) and C(Rk) ≥ Pi\} --- a task τi can only be blocked by critical sections belonging to lower priority tasks with a resource ceiling higher than or equal to Pi. \cite{Buttazzo2011}\
+\section{Extracted Research Questions}
+\textbf{RQ1.} Which situation is called priority inversion?\\ A priority inversion is said to occur in the interval [t3, t6], since the highest-priority task τ1 waits for the execution of lower-priority tasks (τ2 and τ3). \cite{Buttazzo2011}\\
+\textbf{RQ2.} Which protocols are presented in the chapter?\\ The rest of this chapter presents the following resource access protocols: Non-Preemptive Protocol (NPP); Highest Locker Priority (HLP), also called Immediate Priority Ceiling (IPC); Priority Inheritance Protocol (PIP); Priority Ceiling Protocol (PCP); Stack Resource Policy (SRP). \cite{Buttazzo2011}\\
+\textbf{RQ3.} How does NPP avoid unbounded priority inversion?\\ A simple solution that avoids the unbounded priority inversion problem is to disallow preemption during the execution of any critical section. \cite{Buttazzo2011}\\
+\textbf{RQ4.} How does HLP improve NPP?\\ The Highest Locker Priority (HLP) protocol improves NPP by raising the priority of a task that enters a resource Rk to the highest priority among the tasks sharing that resource. \cite{Buttazzo2011}\\
+\textbf{RQ5.} How does PIP avoid unbounded priority inversion?\\ The Priority Inheritance Protocol (PIP), proposed by Sha, Rajkumar and Lehoczky [SRL90], avoids unbounded priority inversion by modifying the priority of those tasks that cause blocking. \cite{Buttazzo2011}\\
+\textbf{RQ6.} What problems are not prevented by PIP?\\ Although the Priority Inheritance Protocol bounds the priority inversion phenomenon, the blocking duration for a task can still be substantial because a chain of blocking can be formed. Another problem is that the protocol does not prevent deadlocks. \cite{Buttazzo2011}\\
+\textbf{RQ7.} What is the purpose of PCP?\\ The Priority Ceiling Protocol (PCP) was introduced by Sha, Rajkumar, and Lehoczky [SRL90] to bound the priority inversion phenomenon and prevent the formation of deadlocks and chained blocking. \cite{Buttazzo2011}\\
+\textbf{RQ8.} What is the maximum blocking result under PCP?\\ Under the Priority Ceiling Protocol, a task τi can be blocked for at most the duration of one critical section. \cite{Buttazzo2011}\\
+\begin{thebibliography}{1}
+\bibitem{Buttazzo2011} G. C. Buttazzo, \emph{Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications}. Springer Science+Business Media, LLC, 2011.
+\end{thebibliography}
+\end{document}

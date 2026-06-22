@@ -1,0 +1,133 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{array}
+
+\title{Priority Ceiling Protocol
+\\(Source Study and Literature Identification)}
+
+\author{\IEEEauthorblockN{Daniel Chidi Chimezie}
+\IEEEauthorblockA{Electronic Engineering\\
+Hochschule Hamm-Lippstadt\\
+Lippstadt, Germany\\
+Matriculation Number: 1230515}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This Phase 1 report documents the initial source-study and literature-identification stage for the seminar topic \emph{Priority Ceiling Protocol} in the Real-Time Systems course. The objective is not yet to present final algorithmic results, but to identify the authoritative source base, locate the relevant technical sections, and define a traceable research path for later phases. The main reference is Buttazzo's \emph{Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications}, which contains the chapter on resource access protocols and the section on the Priority Ceiling Protocol. The report also records the seminar requirements that the later work must satisfy, including mathematical foundations, formal algorithm description, runtime or overhead analysis, and implementation or modelling work. Citations are inserted in IEEE style so that the source basis is visible directly in the text.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Real-Time Systems, Priority Ceiling Protocol, Resource Access Protocols, Priority Inversion, IEEE Format, Literature Study
+\end{IEEEkeywords}
+
+\section{Introduction}
+Real-time systems are distinguished from ordinary computing systems because correctness depends not only on the logical value of a result, but also on the time at which the result is produced \cite{Buttazzo2011}. This makes predictability a central design objective. In systems where several tasks share resources, uncontrolled access to shared data structures, devices, or communication interfaces can introduce blocking effects that influence schedulability. The assigned seminar topic, the Priority Ceiling Protocol (PCP), belongs to the class of resource access protocols used to control such blocking effects in fixed-priority real-time systems \cite{Buttazzo2011}.
+
+This document represents Phase 1 of the project workflow. It intentionally remains limited to source identification and planning. A final seminar paper requires deeper extraction of the PCP rules, mathematical assumptions, blocking-time analysis, and implementation model. According to the seminar instruction, the elaboration must be based on the main reference, supported by additional references, and must include mathematical basics, formal description of the topic, formal algorithm description, runtime or overhead discussion, and an implementation or application example \cite{HenklerSeminar2026}. Therefore, this first report establishes the documented starting point for later work.
+
+\section{Assigned Topic and Scope}
+The assigned topic is \emph{Priority Ceiling Protocol (Resource Access Protocols)}. The scope of Phase 1 is shown in Table~\ref{tab:scope}. The table separates what is already covered in this report from what must be developed in the later analytical phases.
+
+\begin{table}[htbp]
+\caption{Scope of Phase 1}
+\label{tab:scope}
+\centering
+\begin{tabular}{p{0.43\linewidth}p{0.43\linewidth}}
+\toprule
+\textbf{Included in Phase 1} & \textbf{Reserved for Later Phases} \\
+\midrule
+Identification of the primary source & Full PCP algorithm derivation \\
+Location of relevant chapter sections & Formal mathematical proof or analysis \\
+Research objectives and reading plan & UPPAAL or C/C++ implementation \\
+IEEE citation setup & Final seminar conclusion \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This separation is important because the professor's instructions emphasize scientific work and warn against plagiarism. The final paper should not be produced by copying or intellectually rewriting a source. Instead, it should be built from documented understanding, original synthesis, and cited evidence \cite{HenklerSeminar2026}.
+
+\section{Primary Literature Source}
+The primary reference for this topic is Buttazzo's textbook \emph{Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications} \cite{Buttazzo2011}. The book provides the general background on real-time computing, basic scheduling concepts, periodic and aperiodic task scheduling, server mechanisms, resource access protocols, kernel design issues, and real-time operating system standards \cite{Buttazzo2011}.
+
+For this seminar topic, the most relevant part is Chapter 7, \emph{Resource Access Protocols}. Its table of contents identifies the following sections as directly relevant to PCP:
+\begin{itemize}
+    \item the priority inversion phenomenon,
+    \item terminology and assumptions,
+    \item priority inheritance protocol,
+    \item priority ceiling protocol,
+    \item stack resource policy,
+    \item schedulability analysis.
+\end{itemize}
+These sections form the main reading path for the next phase because they provide the conceptual and mathematical context in which PCP is introduced \cite{Buttazzo2011}.
+
+\section{Relation to Seminar Requirements}
+Professor Henkler's seminar instruction specifies that the paper is to be written scientifically, use the IEEE LaTeX template, and be based on the assigned topic and reference base \cite{HenklerSeminar2026}. It also requires that the elaboration contain mathematical basics, formal description of the topic, formal algorithm description, runtime or overhead of the algorithm, implementation of the main feature if possible, and an application example \cite{HenklerSeminar2026}. These requirements define the structure for the later final paper.
+
+The Phase 1 output therefore contributes only the first step: source familiarization. The intended mapping between the professor's required elements and the future work plan is given in Table~\ref{tab:mapping}.
+
+\begin{table}[htbp]
+\caption{Mapping of Seminar Requirements to Future Work}
+\label{tab:mapping}
+\centering
+\begin{tabular}{p{0.38\linewidth}p{0.48\linewidth}}
+\toprule
+\textbf{Requirement} & \textbf{Planned Source-Based Work} \\
+\midrule
+Mathematical basics & Extract task, priority, resource, and blocking notation from Buttazzo \\
+Formal topic description & Define PCP using the terminology from resource access protocols \\
+Formal algorithm description & Derive the access rule and priority modification behavior \\
+Runtime/overhead analysis & Discuss blocking terms and schedulability impact \\
+Implementation & Prepare UPPAAL or C/C++ model of representative resource sharing \\
+Application example & Develop an original example involving tasks and shared resources \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Initial Research Questions}
+The following research questions will guide Phase 2 and Phase 3:
+\begin{enumerate}
+    \item What causes priority inversion in a fixed-priority real-time system?
+    \item Which assumptions are used by Buttazzo when defining resource access protocols?
+    \item How is the priority ceiling of a resource defined?
+    \item Under which rule is a task allowed to enter a critical section under PCP?
+    \item How does PCP bound blocking time compared with uncontrolled semaphore use?
+    \item How does PCP affect schedulability analysis?
+    \item How can the protocol be represented in a small UPPAAL or C/C++ example?
+\end{enumerate}
+
+These questions are deliberately formulated as study questions rather than final claims. The answers must be extracted from the relevant sections and then expressed in original wording with proper citations.
+
+\section{Academic Integrity and AI Usage Control}
+The seminar instruction states that plagiarism is unacceptable and that the submitted paper must be the author's intellectual work \cite{HenklerSeminar2026}. For this reason, the workflow for this project will follow a source-first approach. AI assistance may be used for structuring, formatting, grammar checking, diagram planning, and LaTeX preparation, but technical claims must be traceable to studied sources. Where AI-generated text is used as a drafting aid, the prompt, purpose, output, and student modification should be logged separately in the AI usage protocol.
+
+This Phase 1 report therefore avoids presenting final technical explanations of PCP. It only documents the reference base and planned investigation path. This protects the later report from unsupported claims and makes the research process auditable.
+
+\section{Planned Next Phase}
+Phase 2 will extract the actual technical content from the relevant sections in Chapter 7 of Buttazzo. The expected Phase 2 outputs are:
+\begin{itemize}
+    \item a terminology table,
+    \item a summary of priority inversion,
+    \item a structured explanation of resource access assumptions,
+    \item PCP definitions and rules,
+    \item equations or schedulability terms used in the chapter,
+    \item figures or diagrams recreated in original form,
+    \item a relevance note for each cited source.
+\end{itemize}
+
+Only after Phase 2 and the subsequent mathematical analysis should the final five-page IEEE seminar paper be drafted. This order follows the professor's requirement to first become familiar with the topic using the main reference and then develop a scientific elaboration \cite{HenklerSeminar2026}.
+
+\section{Conclusion}
+This Phase 1 report established the documented starting point for the seminar project on the Priority Ceiling Protocol. Buttazzo's textbook was identified as the primary technical reference, and Chapter 7 on resource access protocols was located as the central source for the topic \cite{Buttazzo2011}. The seminar requirements were also mapped to a phased work plan based on source study, mathematical extraction, formal analysis, implementation, and final IEEE-style reporting \cite{HenklerSeminar2026}. The next step is to perform detailed knowledge extraction from the Priority Ceiling Protocol and schedulability analysis sections.
+
+\bibliographystyle{IEEEtran}
+\bibliography{Report_Phase1_Source_Study_and_Literature_Identification}
+
+\end{document}

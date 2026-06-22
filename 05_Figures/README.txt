@@ -1,0 +1,1 @@
+Figures, screenshots and illustrations.

@@ -18,7 +18,6 @@ The report was prepared by **Daniel Chidi Chimezie**.
 ## Repository Contents
 
 ### Main Report
-- `Priority_Ceiling_Protocol_Report_Daniel_Chidi_Chimezie.pdf`
   - Full technical report discussing PCP theory, operation, schedulability implications, advantages, limitations, and related protocols.
 
 ### Included Diagrams
